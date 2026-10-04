@@ -1,0 +1,158 @@
+# テーブル・カラムの説明文（条件2: comments 以降で LLM に渡す）。
+# ingest 時に DuckDB の COMMENT ON TABLE / COMMENT ON COLUMN にも反映する。
+tables:
+  People:
+    comment: 選手マスタ。1行=1選手。playerID が主キー。
+    columns:
+      playerID: 選手ID（主キー）。Batting/Pitching の playerID と結合する
+      birthYear: 生年
+      birthMonth: 生月
+      birthDay: 生日
+      birthCity: 出生地（市）
+      birthCountry: 出生国（例 USA, D.R., Venezuela, Japan）
+      birthState: 出生地（州・県）
+      deathYear: 没年
+      deathMonth: 没月
+      deathDay: 没日
+      deathCountry: 死亡国
+      deathState: 死亡州
+      deathCity: 死亡市
+      nameFirst: 名（ファーストネーム）
+      nameLast: 姓（ラストネーム）
+      nameGiven: 本名（ミドルネーム含む）
+      weight: 体重（ポンド）
+      height: 身長（インチ）
+      bats: 打席（R=右, L=左, B=両打）
+      throws: 投球腕（R=右, L=左）
+      debut: MLBデビュー日
+      bbrefID: Baseball-Reference の選手ID
+      finalGame: 最終出場日
+      retroID: Retrosheet の選手ID
+
+  Batting:
+    comment: >-
+      打撃成績。1行=選手×シーズン×stint（所属球団の順番）。シーズン途中に移籍した選手は
+      同じ年に複数行（stint=1,2,...）を持つため、選手のシーズン成績は playerID, yearID で合計すること。
+      率（打率・出塁率など）は行ごとの率を平均せず、合計した分子÷合計した分母で再計算すること。
+    columns:
+      playerID: 選手ID（People.playerID）
+      yearID: シーズン（年）
+      stint: その年の所属球団の順番（1=開幕時の球団, 2=移籍先, ...）
+      teamID: 所属チームID（その年の球団コード。Teams とは teamID と yearID の両方で結合する）
+      lgID: リーグ（AL=ア・リーグ, NL=ナ・リーグ, ほか歴史的リーグ）
+      G: 出場試合数
+      AB: 打数
+      R: 得点
+      H: 安打（単打+二塁打+三塁打+本塁打）
+      2B: 二塁打（カラム名が数字で始まるため SQL では "2B" と引用符で囲む）
+      3B: 三塁打（SQL では "3B" と引用符で囲む）
+      HR: 本塁打
+      RBI: 打点
+      SB: 盗塁
+      CS: 盗塁死
+      BB: 四球
+      SO: 三振
+      IBB: 故意四球
+      HBP: 死球
+      SH: 犠打（バント）
+      SF: 犠飛
+      GIDP: 併殺打
+
+  Pitching:
+    comment: >-
+      投手成績。1行=選手×シーズン×stint。移籍した投手は同じ年に複数行を持つため、
+      シーズン成績は playerID, yearID で合計する。投球回は IPOuts（アウト数）で持ち、投球回 = IPOuts / 3。
+      ERA 列は stint 単位の値なので、複数行をまたぐ防御率は ER と IPOuts の合計から再計算すること。
+    columns:
+      playerID: 選手ID（People.playerID）
+      yearID: シーズン（年）
+      stint: その年の所属球団の順番
+      teamID: 所属チームID（Teams とは teamID と yearID で結合する）
+      lgID: リーグ（AL/NL ほか）
+      W: 勝利
+      L: 敗戦
+      G: 登板数
+      GS: 先発登板数
+      CG: 完投
+      SHO: 完封
+      SV: セーブ
+      IPOuts: 投球アウト数（投球回 × 3）
+      H: 被安打
+      ER: 自責点
+      HR: 被本塁打
+      BB: 与四球
+      SO: 奪三振
+      BAOpp: 被打率（stint 単位）
+      ERA: 防御率（stint 単位。合計には使わない）
+      IBB: 故意四球
+      WP: 暴投
+      HBP: 与死球
+      BK: ボーク
+      BFP: 対戦打者数
+      GF: 試合を締めくくった登板数
+      R: 失点
+      SH: 被犠打
+      SF: 被犠飛
+      GIDP: 併殺打を打たせた数
+
+  Teams:
+    comment: >-
+      チーム成績。1行=チーム×シーズン。teamID はその年の球団コードで、移転や改称で変わる
+      （例: エンゼルスは CAL→ANA→LAA）。球団の連続性は franchID（フランチャイズID）で表す。
+    columns:
+      yearID: シーズン（年）
+      lgID: リーグ（AL/NL ほか）
+      teamID: チームID（年ごとの球団コード）
+      franchID: フランチャイズID（TeamsFranchises.franchID）。移転・改称をまたいで同じ球団を表す
+      divID: 地区（E/C/W）
+      Rank: 地区順位
+      G: 試合数
+      GHome: ホーム試合数
+      W: 勝利数
+      L: 敗戦数
+      DivWin: 地区優勝（Y/N）
+      WCWin: ワイルドカード獲得（Y/N）
+      LgWin: リーグ優勝（Y/N）
+      WSWin: ワールドシリーズ優勝（Y/N）
+      R: 得点
+      AB: 打数
+      H: 安打
+      2B: 二塁打（SQL では "2B"）
+      3B: 三塁打（SQL では "3B"）
+      HR: 本塁打
+      BB: 四球
+      SO: 三振（打者）
+      SB: 盗塁
+      CS: 盗塁死
+      HBP: 死球
+      SF: 犠飛
+      RA: 失点
+      ER: 自責点
+      ERA: チーム防御率
+      CG: 完投
+      SHO: 完封
+      SV: セーブ
+      IPOuts: 投球アウト数
+      HA: 被安打
+      HRA: 被本塁打
+      BBA: 与四球
+      SOA: 奪三振（投手）
+      E: 失策
+      DP: 併殺
+      FP: 守備率
+      name: チーム名（例 New York Yankees）
+      park: 本拠地球場名
+      attendance: 観客動員数
+      BPF: 打者パークファクター
+      PPF: 投手パークファクター
+      teamIDBR: Baseball-Reference のチームID
+      teamIDlahman45: 旧Lahman 4.5 のチームID
+      teamIDretro: Retrosheet のチームID
+
+  TeamsFranchises:
+    comment: フランチャイズ（球団）マスタ。1行=1フランチャイズ。
+    columns:
+      franchID: フランチャイズID（主キー。Teams.franchID と結合）
+      franchName: フランチャイズ名（例 New York Yankees）
+      active: 現存球団か（Y/N）
+      NAassoc: ナショナル・アソシエーション時代の関連ID

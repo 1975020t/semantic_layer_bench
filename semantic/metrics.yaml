@@ -1,0 +1,258 @@
+# 宣言的メトリクス定義（条件4: metrics）。
+#
+# metric_views の各要素は Databricks Unity Catalog Metric Views の YAML（version 1.1）に
+# できるだけ寄せている。Databricks へ持ち込むときは、各要素から name / comment 以外を取り出して
+#   CREATE VIEW <catalog>.<schema>.<name> WITH METRICS LANGUAGE YAML AS $$ ...YAML... $$
+# とすればよい（README「Databricks への持ち込み」参照）。
+#
+# 約束事（Metric Views と同じ）:
+#   - source は 3 階層名。ローカル DuckDB ではファイル名 lahman がカタログ、main がスキーマ。
+#   - join は many-to-one のみ（fact → dimension）。on では source.<col> と <join名>.<col> を参照。
+#   - measure は集計式。率指標は「合計÷合計」で定義しているので、どの粒度で GROUP BY しても
+#     合計から再計算される（行ごとの率の平均にはならない）。
+#   - 数字で始まる列名は Databricks 流にバッククォートで書く（コンパイラが DuckDB 用に変換する）。
+metric_views:
+  - name: batting_metrics
+    comment: 打撃成績（Batting）。1行=選手×シーズン×stint。移籍選手の stint は集計時に自動で合算される。
+    version: 1.1
+    source: lahman.main.Batting
+    joins:
+      - name: people
+        source: lahman.main.People
+        on: source.playerID = people.playerID
+      - name: teams
+        source: lahman.main.Teams
+        on: source.teamID = teams.teamID AND source.yearID = teams.yearID
+    dimensions:
+      - name: year
+        expr: source.yearID
+        comment: シーズン（年）
+      - name: decade
+        expr: (source.yearID // 10) * 10
+        comment: 年代（1990 = 1990〜1999年）
+      - name: player_id
+        expr: source.playerID
+        comment: 選手ID
+      - name: player_name
+        expr: people.nameFirst || ' ' || people.nameLast
+        comment: 選手名（名 姓）
+      - name: team_id
+        expr: source.teamID
+        comment: チームID（年ごとの球団コード）
+      - name: franchise_id
+        expr: teams.franchID
+        comment: フランチャイズID（移転・改称をまたぐ球団ID）
+      - name: team_name
+        expr: teams.name
+        comment: その年のチーム名
+      - name: league
+        expr: source.lgID
+        comment: リーグ（AL/NL）
+      - name: birth_country
+        expr: people.birthCountry
+        comment: 出生国
+    measures:
+      - name: games
+        expr: SUM(source.G)
+        comment: 出場試合数
+      - name: plate_appearances
+        expr: SUM(source.AB + source.BB + source.HBP + source.SH + source.SF)
+        comment: 打席 = 打数+四球+死球+犠打+犠飛
+      - name: at_bats
+        expr: SUM(source.AB)
+        comment: 打数
+      - name: runs
+        expr: SUM(source.R)
+        comment: 得点
+      - name: hits
+        expr: SUM(source.H)
+        comment: 安打
+      - name: doubles
+        expr: SUM(source.`2B`)
+        comment: 二塁打
+      - name: triples
+        expr: SUM(source.`3B`)
+        comment: 三塁打
+      - name: home_runs
+        expr: SUM(source.HR)
+        comment: 本塁打
+      - name: rbi
+        expr: SUM(source.RBI)
+        comment: 打点
+      - name: stolen_bases
+        expr: SUM(source.SB)
+        comment: 盗塁
+      - name: walks
+        expr: SUM(source.BB)
+        comment: 四球
+      - name: strikeouts
+        expr: SUM(source.SO)
+        comment: 三振
+      - name: batting_avg
+        expr: SUM(source.H) / NULLIF(SUM(source.AB), 0)
+        comment: 打率 = 安打 / 打数
+      - name: on_base_pct
+        expr: SUM(source.H + source.BB + source.HBP) / NULLIF(SUM(source.AB + source.BB + source.HBP + source.SF), 0)
+        comment: 出塁率 = (安打+四球+死球) / (打数+四球+死球+犠飛)
+      - name: slugging_pct
+        expr: SUM(source.H + source.`2B` + 2 * source.`3B` + 3 * source.HR) / NULLIF(SUM(source.AB), 0)
+        comment: 長打率 = 塁打 / 打数（塁打 = 安打+二塁打+2×三塁打+3×本塁打）
+      - name: ops
+        expr: >-
+          SUM(source.H + source.BB + source.HBP) / NULLIF(SUM(source.AB + source.BB + source.HBP + source.SF), 0)
+          + SUM(source.H + source.`2B` + 2 * source.`3B` + 3 * source.HR) / NULLIF(SUM(source.AB), 0)
+        comment: OPS = 出塁率 + 長打率
+      - name: player_count
+        expr: COUNT(DISTINCT source.playerID)
+        comment: 選手数（重複なし）
+      - name: team_count
+        expr: COUNT(DISTINCT source.teamID)
+        comment: 所属チーム数（重複なし。選手×年で集計すると移籍回数+1）
+
+  - name: pitching_metrics
+    comment: 投手成績（Pitching）。1行=選手×シーズン×stint。
+    version: 1.1
+    source: lahman.main.Pitching
+    joins:
+      - name: people
+        source: lahman.main.People
+        on: source.playerID = people.playerID
+      - name: teams
+        source: lahman.main.Teams
+        on: source.teamID = teams.teamID AND source.yearID = teams.yearID
+    dimensions:
+      - name: year
+        expr: source.yearID
+        comment: シーズン（年）
+      - name: decade
+        expr: (source.yearID // 10) * 10
+        comment: 年代
+      - name: player_id
+        expr: source.playerID
+        comment: 選手ID
+      - name: player_name
+        expr: people.nameFirst || ' ' || people.nameLast
+        comment: 選手名（名 姓）
+      - name: team_id
+        expr: source.teamID
+        comment: チームID
+      - name: franchise_id
+        expr: teams.franchID
+        comment: フランチャイズID
+      - name: team_name
+        expr: teams.name
+        comment: その年のチーム名
+      - name: league
+        expr: source.lgID
+        comment: リーグ（AL/NL）
+    measures:
+      - name: pitcher_games
+        expr: SUM(source.G)
+        comment: 登板数
+      - name: games_started
+        expr: SUM(source.GS)
+        comment: 先発登板数
+      - name: pitcher_wins
+        expr: SUM(source.W)
+        comment: 勝利
+      - name: pitcher_losses
+        expr: SUM(source.L)
+        comment: 敗戦
+      - name: saves
+        expr: SUM(source.SV)
+        comment: セーブ
+      - name: innings_pitched
+        expr: SUM(source.IPOuts) / 3.0
+        comment: 投球回 = IPOuts / 3
+      - name: earned_runs
+        expr: SUM(source.ER)
+        comment: 自責点
+      - name: pitcher_strikeouts
+        expr: SUM(source.SO)
+        comment: 奪三振
+      - name: walks_allowed
+        expr: SUM(source.BB)
+        comment: 与四球
+      - name: hits_allowed
+        expr: SUM(source.H)
+        comment: 被安打
+      - name: home_runs_allowed
+        expr: SUM(source.HR)
+        comment: 被本塁打
+      - name: era
+        expr: 27.0 * SUM(source.ER) / NULLIF(SUM(source.IPOuts), 0)
+        comment: 防御率 = 自責点 × 9 / 投球回
+      - name: whip
+        expr: 3.0 * SUM(source.BB + source.H) / NULLIF(SUM(source.IPOuts), 0)
+        comment: WHIP = (与四球+被安打) / 投球回
+      - name: k_per_9
+        expr: 27.0 * SUM(source.SO) / NULLIF(SUM(source.IPOuts), 0)
+        comment: 奪三振率（K/9）= 奪三振 × 9 / 投球回
+      - name: pitcher_count
+        expr: COUNT(DISTINCT source.playerID)
+        comment: 投手数（重複なし）
+
+  - name: team_metrics
+    comment: チーム成績（Teams）。1行=チーム×シーズン。
+    version: 1.1
+    source: lahman.main.Teams
+    joins:
+      - name: franchises
+        source: lahman.main.TeamsFranchises
+        on: source.franchID = franchises.franchID
+    dimensions:
+      - name: year
+        expr: source.yearID
+        comment: シーズン（年）
+      - name: decade
+        expr: (source.yearID // 10) * 10
+        comment: 年代
+      - name: team_id
+        expr: source.teamID
+        comment: チームID（年ごとの球団コード）
+      - name: franchise_id
+        expr: source.franchID
+        comment: フランチャイズID（移転・改称をまたぐ球団ID）
+      - name: franchise_name
+        expr: franchises.franchName
+        comment: フランチャイズ名
+      - name: team_name
+        expr: source.name
+        comment: その年のチーム名
+      - name: league
+        expr: source.lgID
+        comment: リーグ（AL/NL）
+      - name: division
+        expr: source.divID
+        comment: 地区（E/C/W）
+    measures:
+      - name: team_games
+        expr: SUM(source.G)
+        comment: 試合数
+      - name: wins
+        expr: SUM(source.W)
+        comment: 勝利数
+      - name: losses
+        expr: SUM(source.L)
+        comment: 敗戦数
+      - name: win_pct
+        expr: SUM(source.W) / NULLIF(SUM(source.W + source.L), 0)
+        comment: 勝率 = 勝利 / (勝利+敗戦)
+      - name: team_runs
+        expr: SUM(source.R)
+        comment: 得点
+      - name: runs_allowed
+        expr: SUM(source.RA)
+        comment: 失点
+      - name: runs_per_game
+        expr: SUM(source.R) / NULLIF(SUM(source.G), 0)
+        comment: 1試合あたり得点 = 得点 / 試合数
+      - name: world_series_titles
+        expr: SUM(CASE WHEN source.WSWin = 'Y' THEN 1 ELSE 0 END)
+        comment: ワールドシリーズ優勝回数
+      - name: pennants
+        expr: SUM(CASE WHEN source.LgWin = 'Y' THEN 1 ELSE 0 END)
+        comment: リーグ優勝回数
+      - name: attendance
+        expr: SUM(source.attendance)
+        comment: 観客動員数

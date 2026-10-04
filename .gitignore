@@ -1,0 +1,17 @@
+# data (CC BY-SA, not tracked)
+data/raw/*
+!data/raw/.gitkeep
+data/*.duckdb
+data/*.duckdb.wal
+data/_download/
+# secrets
+.env
+*.key
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+# mock outputs
+cache/mock/
+results/dryrun/

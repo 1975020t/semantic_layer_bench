@@ -1,0 +1,103 @@
+# 例示（質問と SQL のペア）。条件3: context では sql を、条件4: metrics では metrics を見せる。
+# 評価用の質問（questions/questions.yaml）と同じ質問は入れない（tests/test_questions.py で検査）。
+examples:
+  - question: 2016年の盗塁数トップ3の選手を、多い順に選手IDと盗塁数で示してください。
+    sql: |
+      SELECT playerID, SUM(SB) AS sb
+      FROM Batting WHERE yearID = 2016
+      GROUP BY playerID            -- 移籍選手の stint を合算
+      ORDER BY sb DESC LIMIT 3
+    metrics:
+      measures: [stolen_bases]
+      dimensions: [player_id]
+      filters: [{field: year, op: "=", value: 2016}]
+      order_by: [{field: stolen_bases, direction: desc}]
+      limit: 3
+
+  - question: 2017年に規定打席に到達した打者の出塁率トップ3を、高い順に選手IDと出塁率で示してください。
+    sql: |
+      SELECT playerID, SUM(H + BB + HBP) / SUM(AB + BB + HBP + SF) AS obp
+      FROM Batting WHERE yearID = 2017
+      GROUP BY playerID
+      HAVING SUM(AB + BB + HBP + SH + SF) >= 502
+      ORDER BY obp DESC LIMIT 3
+    metrics:
+      measures: [on_base_pct]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2017}
+        - {field: plate_appearances, op: ">=", value: 502}
+      order_by: [{field: on_base_pct, direction: desc}]
+      limit: 3
+
+  - question: 2005年に規定投球回に到達した投手のうち、奪三振率（K/9）が最も高い投手の選手IDと奪三振率を示してください。
+    sql: |
+      SELECT playerID, 27.0 * SUM(SO) / SUM(IPOuts) AS k9
+      FROM Pitching WHERE yearID = 2005
+      GROUP BY playerID
+      HAVING SUM(IPOuts) >= 486
+      ORDER BY k9 DESC LIMIT 1
+    metrics:
+      measures: [k_per_9]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2005}
+        - {field: innings_pitched, op: ">=", value: 162}
+      order_by: [{field: k_per_9, direction: desc}]
+      limit: 1
+
+  - question: 2000年から2009年までの各年について、ヤンキース球団の勝率を年の順に示してください。
+    sql: |
+      SELECT yearID, SUM(W) / SUM(W + L) AS win_pct
+      FROM Teams WHERE franchID = 'NYY' AND yearID BETWEEN 2000 AND 2009
+      GROUP BY yearID ORDER BY yearID
+    metrics:
+      measures: [win_pct]
+      dimensions: [year]
+      filters:
+        - {field: franchise_id, op: "=", value: NYY}
+        - {field: year, op: between, value: [2000, 2009]}
+      order_by: [{field: year, direction: asc}]
+
+  - question: 2010年代にワールドシリーズを2回以上制した球団を、フランチャイズIDと優勝回数で示してください。
+    sql: |
+      SELECT franchID, SUM(CASE WHEN WSWin = 'Y' THEN 1 ELSE 0 END) AS titles
+      FROM Teams WHERE yearID BETWEEN 2010 AND 2019
+      GROUP BY franchID
+      HAVING SUM(CASE WHEN WSWin = 'Y' THEN 1 ELSE 0 END) >= 2
+    metrics:
+      measures: [world_series_titles]
+      dimensions: [franchise_id]
+      filters:
+        - {field: year, op: between, value: [2010, 2019]}
+        - {field: world_series_titles, op: ">=", value: 2}
+
+  - question: 2000年代の各年について、MLB全体の防御率を年の順に示してください。
+    sql: |
+      SELECT yearID, 27.0 * SUM(ER) / SUM(IPOuts) AS era   -- ERA 列の平均ではなく合計から再計算
+      FROM Pitching WHERE yearID BETWEEN 2000 AND 2009
+      GROUP BY yearID ORDER BY yearID
+    metrics:
+      measures: [era]
+      dimensions: [year]
+      filters: [{field: year, op: between, value: [2000, 2009]}]
+      order_by: [{field: year, direction: asc}]
+
+  - question: 2012年のチーム別の二塁打数を、チームID・チーム名とともに多い順に示してください。
+    sql: |
+      SELECT b.teamID, t.name, SUM(b."2B") AS doubles   -- 数字で始まる列名は引用符で囲む
+      FROM Batting b
+      JOIN Teams t ON b.teamID = t.teamID AND b.yearID = t.yearID
+      WHERE b.yearID = 2012
+      GROUP BY b.teamID, t.name ORDER BY doubles DESC
+    metrics:
+      measures: [doubles]
+      dimensions: [team_id, team_name]
+      filters: [{field: year, op: "=", value: 2012}]
+      order_by: [{field: doubles, direction: desc}]
+
+  - question: 2015年の盗塁成功率が最も高い選手は誰ですか。
+    sql: null
+    metrics:
+      unanswerable: true
+      reason: 盗塁成功率（SB / (SB + CS)）に当たる measure が定義されていないため回答できない。

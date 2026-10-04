@@ -1,0 +1,373 @@
+# 評価用の質問セット（20問 × 5カテゴリ各4問）。
+#   gold_sql          : 手書きの正解SQL（DuckDB で実行して結果を確認済み。tests/test_questions.py で検証）
+#   ordered           : true のとき行順も採点する（質問が順序を求めるとき）
+#   metrics_answerable: false のとき metrics 条件では定義外（回答不能が適切）
+#   reference_metrics : metrics 条件の模範クエリ（モックモードの応答と、コンパイラ検証に使う）
+# 解釈が分かれる用語（「最強打者」など）の正解は semantic/glossary.md の定義に従う。
+
+categories:
+  simple: 単純集計
+  derived: 派生指標
+  join_grain: 結合・粒度の罠
+  ambiguous: 曖昧な表現
+  timeseries: 時系列・比較
+
+# 疎通確認（各条件1問、計4回）に使う質問。評価には含めない。
+smoke:
+  id: s01
+  category: simple
+  question: 2019年のMLB全体の本塁打の合計はいくつですか。
+  gold_sql: SELECT SUM(HR) AS hr FROM Batting WHERE yearID = 2019
+  ordered: false
+  metrics_answerable: true
+  reference_metrics:
+    measures: [home_runs]
+    filters: [{field: year, op: "=", value: 2019}]
+
+# 再現性確認（4問 × 4条件 × 追加1回）に使う質問
+repro_questions: [q05, q10, q14, q18]
+
+questions:
+  # ---------------- 単純集計 ----------------
+  - id: q01
+    category: simple
+    question: 2019年の本塁打数トップ5の選手を、本塁打数の多い順に、選手IDと本塁打数で示してください。
+    gold_sql: |
+      SELECT playerID, SUM(HR) AS hr
+      FROM Batting WHERE yearID = 2019
+      GROUP BY playerID ORDER BY hr DESC LIMIT 5
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [home_runs]
+      dimensions: [player_id]
+      filters: [{field: year, op: "=", value: 2019}]
+      order_by: [{field: home_runs, direction: desc}]
+      limit: 5
+
+  - id: q02
+    category: simple
+    question: 2022年のア・リーグ（AL）で90勝以上したチームのチームIDと勝利数を示してください。
+    gold_sql: |
+      SELECT teamID, W FROM Teams
+      WHERE yearID = 2022 AND lgID = 'AL' AND W >= 90
+    ordered: false
+    metrics_answerable: true
+    reference_metrics:
+      measures: [wins]
+      dimensions: [team_id]
+      filters:
+        - {field: year, op: "=", value: 2022}
+        - {field: league, op: "=", value: AL}
+        - {field: wins, op: ">=", value: 90}
+
+  - id: q03
+    category: simple
+    question: 2023年に打撃成績の記録がある選手は何人ですか。
+    gold_sql: SELECT COUNT(DISTINCT playerID) AS n FROM Batting WHERE yearID = 2023
+    ordered: false
+    metrics_answerable: true
+    reference_metrics:
+      measures: [player_count]
+      filters: [{field: year, op: "=", value: 2023}]
+
+  - id: q04
+    category: simple
+    question: 2010年から2019年までの各年のワールドシリーズ優勝チームを、年の順に年とチームIDで示してください。
+    gold_sql: |
+      SELECT yearID, teamID FROM Teams
+      WHERE WSWin = 'Y' AND yearID BETWEEN 2010 AND 2019
+      ORDER BY yearID
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [world_series_titles]
+      dimensions: [year, team_id]
+      filters:
+        - {field: year, op: between, value: [2010, 2019]}
+        - {field: world_series_titles, op: ">=", value: 1}
+      order_by: [{field: year, direction: asc}]
+
+  # ---------------- 派生指標 ----------------
+  - id: q05
+    category: derived
+    question: 2021年に規定打席に到達した打者のうち、打率トップ5を打率の高い順に、選手IDと打率で示してください。
+    gold_sql: |
+      SELECT playerID, SUM(H) / SUM(AB) AS avg
+      FROM Batting WHERE yearID = 2021
+      GROUP BY playerID
+      HAVING SUM(AB + BB + HBP + SH + SF) >= 502
+      ORDER BY avg DESC LIMIT 5
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [batting_avg]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2021}
+        - {field: plate_appearances, op: ">=", value: 502}
+      order_by: [{field: batting_avg, direction: desc}]
+      limit: 5
+
+  - id: q06
+    category: derived
+    question: 2018年に規定投球回に到達した投手のうち、防御率が低い順にトップ5を、選手IDと防御率で示してください。
+    gold_sql: |
+      SELECT playerID, 27.0 * SUM(ER) / SUM(IPOuts) AS era
+      FROM Pitching WHERE yearID = 2018
+      GROUP BY playerID
+      HAVING SUM(IPOuts) >= 486
+      ORDER BY era ASC LIMIT 5
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [era]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2018}
+        - {field: innings_pitched, op: ">=", value: 162}
+      order_by: [{field: era, direction: asc}]
+      limit: 5
+
+  - id: q07
+    category: derived
+    question: 2015年のチーム打撃OPS（出塁率＋長打率）の上位3チームを、高い順にチームIDとOPSで示してください。
+    gold_sql: |
+      SELECT teamID,
+             (H + BB + HBP) / (AB + BB + HBP + SF) + (H + "2B" + 2 * "3B" + 3 * HR) / AB AS ops
+      FROM Teams WHERE yearID = 2015
+      ORDER BY ops DESC LIMIT 3
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [ops]
+      dimensions: [team_id]
+      filters: [{field: year, op: "=", value: 2015}]
+      order_by: [{field: ops, direction: desc}]
+      limit: 3
+
+  - id: q08
+    category: derived
+    question: 2023年に規定投球回に到達した投手のうち、WHIPが最も低い3人を低い順に、選手IDとWHIPで示してください。
+    gold_sql: |
+      SELECT playerID, 3.0 * SUM(BB + H) / SUM(IPOuts) AS whip
+      FROM Pitching WHERE yearID = 2023
+      GROUP BY playerID
+      HAVING SUM(IPOuts) >= 486
+      ORDER BY whip ASC LIMIT 3
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [whip]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2023}
+        - {field: innings_pitched, op: ">=", value: 162}
+      order_by: [{field: whip, direction: asc}]
+      limit: 3
+
+  # ---------------- 結合・粒度の罠 ----------------
+  - id: q09
+    category: join_grain
+    question: J.D.マルティネス（選手ID martijd02）の2017年シーズンの本塁打数と打点を示してください。
+    gold_sql: |
+      SELECT SUM(HR) AS hr, SUM(RBI) AS rbi
+      FROM Batting WHERE playerID = 'martijd02' AND yearID = 2017
+    ordered: false
+    metrics_answerable: true
+    notes: シーズン途中で DET→ARI に移籍（stint 2行）。合算して1行で答える。
+    reference_metrics:
+      measures: [home_runs, rbi]
+      filters:
+        - {field: player_id, op: "=", value: martijd02}
+        - {field: year, op: "=", value: 2017}
+
+  - id: q10
+    category: join_grain
+    question: エンゼルス球団（現ロサンゼルス・エンゼルス）の1990年から2020年までの通算勝利数はいくつですか。
+    gold_sql: |
+      SELECT SUM(W) AS wins FROM Teams
+      WHERE franchID = 'ANA' AND yearID BETWEEN 1990 AND 2020
+    ordered: false
+    metrics_answerable: true
+    notes: teamID は CAL→ANA→LAA と変わる。franchID = 'ANA' で集計する必要がある。
+    reference_metrics:
+      measures: [wins]
+      filters:
+        - {field: franchise_id, op: "=", value: ANA}
+        - {field: year, op: between, value: [1990, 2020]}
+
+  - id: q11
+    category: join_grain
+    question: 2019年のナショナル・リーグ（NL）全体の打率はいくつですか。
+    gold_sql: |
+      SELECT SUM(H) / SUM(AB) AS avg FROM Batting
+      WHERE yearID = 2019 AND lgID = 'NL'
+    ordered: false
+    metrics_answerable: true
+    notes: 選手ごとの打率の平均（約0.175）は誤り。合計安打÷合計打数で再計算する。
+    reference_metrics:
+      measures: [batting_avg]
+      filters:
+        - {field: year, op: "=", value: 2019}
+        - {field: league, op: "=", value: NL}
+
+  - id: q12
+    category: join_grain
+    question: 2018年にシーズン途中で移籍して2球団以上でプレーした選手のうち、そのシーズンの合計本塁打が最も多い選手の選手IDと合計本塁打数を示してください。
+    gold_sql: |
+      SELECT playerID, SUM(HR) AS hr
+      FROM Batting WHERE yearID = 2018
+      GROUP BY playerID
+      HAVING COUNT(DISTINCT teamID) >= 2
+      ORDER BY hr DESC LIMIT 1
+    ordered: false
+    metrics_answerable: true
+    reference_metrics:
+      measures: [home_runs]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2018}
+        - {field: team_count, op: ">=", value: 2}
+      order_by: [{field: home_runs, direction: desc}]
+      limit: 1
+
+  # ---------------- 曖昧な表現 ----------------
+  - id: q13
+    category: ambiguous
+    question: 2019年の最強打者は誰ですか。選手IDで答えてください。
+    gold_sql: |
+      SELECT playerID
+      FROM Batting WHERE yearID = 2019
+      GROUP BY playerID
+      HAVING SUM(AB + BB + HBP + SH + SF) >= 502
+      ORDER BY SUM(H + BB + HBP) / SUM(AB + BB + HBP + SF)
+             + SUM(H + "2B" + 2 * "3B" + 3 * HR) / SUM(AB) DESC
+      LIMIT 1
+    ordered: false
+    metrics_answerable: true
+    notes: 用語集「最強打者」= 規定打席以上で OPS 最高。
+    reference_metrics:
+      measures: [ops]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2019}
+        - {field: plate_appearances, op: ">=", value: 502}
+      order_by: [{field: ops, direction: desc}]
+      limit: 1
+
+  - id: q14
+    category: ambiguous
+    question: 2022年に最も安定していた投手を3人、安定している順に選手IDで挙げてください。
+    gold_sql: |
+      SELECT playerID
+      FROM Pitching WHERE yearID = 2022
+      GROUP BY playerID
+      HAVING SUM(IPOuts) >= 486
+      ORDER BY 3.0 * SUM(BB + H) / SUM(IPOuts) ASC
+      LIMIT 3
+    ordered: true
+    metrics_answerable: true
+    notes: 用語集「安定した投手」= 規定投球回以上で WHIP が低い。
+    reference_metrics:
+      measures: [whip]
+      dimensions: [player_id]
+      filters:
+        - {field: year, op: "=", value: 2022}
+        - {field: innings_pitched, op: ">=", value: 162}
+      order_by: [{field: whip, direction: asc}]
+      limit: 3
+
+  - id: q15
+    category: ambiguous
+    question: 1990年代に最も成功した球団はどこですか。フランチャイズIDで答えてください。
+    gold_sql: |
+      SELECT franchID FROM Teams
+      WHERE yearID BETWEEN 1990 AND 1999
+      GROUP BY franchID
+      ORDER BY SUM(W) / SUM(W + L) DESC
+      LIMIT 1
+    ordered: false
+    metrics_answerable: true
+    notes: 用語集「成功した球団」= 期間通算のレギュラーシーズン勝率が最高（ATL）。WS優勝回数なら NYY になる。
+    reference_metrics:
+      measures: [win_pct]
+      dimensions: [franchise_id]
+      filters: [{field: year, op: between, value: [1990, 1999]}]
+      order_by: [{field: win_pct, direction: desc}]
+      limit: 1
+
+  - id: q16
+    category: ambiguous
+    question: 2010年代（2010〜2019年）で最も長打力のある打者トップ5を、長打力の高い順に選手IDで示してください。
+    gold_sql: |
+      SELECT playerID
+      FROM Batting WHERE yearID BETWEEN 2010 AND 2019
+      GROUP BY playerID
+      HAVING SUM(AB + BB + HBP + SH + SF) >= 3000
+      ORDER BY SUM("2B" + 2 * "3B" + 3 * HR) / SUM(AB) DESC
+      LIMIT 5
+    ordered: true
+    metrics_answerable: false
+    notes: 用語集「長打力」= ISO（長打率−打率）、期間通算3000打席以上。ISO は metrics.yaml に未定義 → metrics 条件では回答不能。
+
+  # ---------------- 時系列・比較 ----------------
+  - id: q17
+    category: timeseries
+    question: 1970年代から2010年代まで、年代ごとのMLB全体の打率と本塁打総数を、年代の古い順に示してください（年代は1970のように開始年で表す）。
+    gold_sql: |
+      SELECT (yearID // 10) * 10 AS decade, SUM(H) / SUM(AB) AS avg, SUM(HR) AS hr
+      FROM Batting WHERE yearID BETWEEN 1970 AND 2019
+      GROUP BY 1 ORDER BY 1
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [batting_avg, home_runs]
+      dimensions: [decade]
+      filters: [{field: year, op: between, value: [1970, 2019]}]
+      order_by: [{field: decade, direction: asc}]
+
+  - id: q18
+    category: timeseries
+    question: 2000年から2019年までの各年について、MLB全投手の奪三振率（K/9）を年の順に示してください。
+    gold_sql: |
+      SELECT yearID, 27.0 * SUM(SO) / SUM(IPOuts) AS k9
+      FROM Pitching WHERE yearID BETWEEN 2000 AND 2019
+      GROUP BY yearID ORDER BY yearID
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [k_per_9]
+      dimensions: [year]
+      filters: [{field: year, op: between, value: [2000, 2019]}]
+      order_by: [{field: year, direction: asc}]
+
+  - id: q19
+    category: timeseries
+    question: 2015年から2024年までの各年について、MLB全体の本塁打総数と、その前年からの増減数を年の順に示してください。
+    gold_sql: |
+      WITH y AS (
+        SELECT yearID, SUM(HR) AS hr FROM Batting
+        WHERE yearID BETWEEN 2014 AND 2024 GROUP BY yearID
+      )
+      SELECT yearID, hr, hr - LAG(hr) OVER (ORDER BY yearID) AS diff
+      FROM y QUALIFY yearID >= 2015
+      ORDER BY yearID
+    ordered: true
+    metrics_answerable: false
+    notes: 前年比はウィンドウ関数が必要で、宣言的メトリクスの {measures, dimensions, filters} では表現できない。
+
+  - id: q20
+    category: timeseries
+    question: 2010年から2019年までの各年について、ア・リーグとナ・リーグそれぞれの1試合あたり平均得点を、年・リーグの順に示してください。
+    gold_sql: |
+      SELECT yearID, lgID, SUM(R) / SUM(G) AS runs_per_game
+      FROM Teams WHERE yearID BETWEEN 2010 AND 2019
+      GROUP BY yearID, lgID ORDER BY yearID, lgID
+    ordered: true
+    metrics_answerable: true
+    reference_metrics:
+      measures: [runs_per_game]
+      dimensions: [year, league]
+      filters: [{field: year, op: between, value: [2010, 2019]}]
+      order_by: [{field: year, direction: asc}, {field: league, direction: asc}]
