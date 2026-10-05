@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nWITH yearly AS (\n  SELECT yearID, SUM(HR) AS total_hr\n  FROM Batting\n  WHERE yearID BETWEEN 2014 AND 2024\n  GROUP BY yearID\n)\nSELECT yearID,\n       total_hr,\n       total_hr - LAG(total_hr) OVER (ORDER BY yearID) AS diff_from_prev\nFROM yearly\nWHERE yearID BETWEEN 2015 AND 2024\nORDER BY yearID\n```",
+ "input_tokens": 6038,
+ "output_tokens": 180,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "d87212f46a4ba52d"
+}

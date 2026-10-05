@@ -1,0 +1,18 @@
+{
+ "text": "規定投球回は1チームあたりの試合数×1イニング。IPouts換算で試合数×3。2023年は全チーム162試合なので486アウト以上。ただしstint(複数チーム在籍)を合算する必要があるため、選手単位で集計します。\n\nWHIP = (BB + H) / (IPOuts/3)。\n\n```sql\nSELECT\n  playerID,\n  (SUM(BB) + SUM(H)) / (SUM(IPOuts) / 3.0) AS WHIP\nFROM Pitching\nWHERE yearID = 2023\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 162 * 3\nORDER BY WHIP ASC\nLIMIT 3;\n```",
+ "input_tokens": 1529,
+ "output_tokens": 249,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "35b3ab18ca47d796"
+}

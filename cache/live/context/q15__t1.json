@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT franchID\nFROM Teams\nWHERE yearID BETWEEN 1990 AND 1999\nGROUP BY franchID\nORDER BY SUM(W) / SUM(W + L) DESC\nLIMIT 1\n```",
+ "input_tokens": 6026,
+ "output_tokens": 88,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "c9b3735d4b1c095b"
+}

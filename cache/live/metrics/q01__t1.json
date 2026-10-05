@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"home_runs\"], \"dimensions\": [\"player_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"=\", \"value\": 2019}], \"order_by\": [{\"field\": \"home_runs\", \"direction\": \"desc\"}], \"limit\": 5}\n```",
+ "input_tokens": 4519,
+ "output_tokens": 92,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "1eb3bb2a7fe2caf5"
+}

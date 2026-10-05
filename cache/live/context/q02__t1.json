@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT teamID, W AS wins\nFROM Teams\nWHERE yearID = 2022 AND lgID = 'AL' AND W >= 90\nORDER BY wins DESC\n```",
+ "input_tokens": 6032,
+ "output_tokens": 71,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "f65fa28b33f0c9d8"
+}

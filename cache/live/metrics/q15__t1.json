@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"win_pct\"], \"dimensions\": [\"franchise_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"between\", \"value\": [1990, 1999]}], \"order_by\": [{\"field\": \"win_pct\", \"direction\": \"desc\"}], \"limit\": 1}\n```",
+ "input_tokens": 4507,
+ "output_tokens": 99,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "a788d4c3ef5da1b3"
+}

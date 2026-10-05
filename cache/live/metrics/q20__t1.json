@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"runs_per_game\"], \"dimensions\": [\"year\", \"league\"], \"filters\": [{\"field\": \"year\", \"op\": \"between\", \"value\": [2010, 2019]}, {\"field\": \"league\", \"op\": \"in\", \"value\": [\"AL\", \"NL\"]}], \"order_by\": [{\"field\": \"year\", \"direction\": \"asc\"}, {\"field\": \"league\", \"direction\": \"asc\"}], \"limit\": null}\n```",
+ "input_tokens": 4531,
+ "output_tokens": 141,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "809686b0fb4efd71"
+}

@@ -1,0 +1,18 @@
+{
+ "text": "前年からの増減は、メトリクスクエリでは直接計算できません。ただし、2014年から2024年の本塁打総数を年別に取得すれば、前年比の増減は結果から導けます。2015年の増減を求めるため、範囲は2014年から取得しています。\n\n```json\n{\"measures\": [\"home_runs\"], \"dimensions\": [\"year\"], \"filters\": [{\"field\": \"year\", \"op\": \"between\", \"value\": [2014, 2024]}], \"order_by\": [{\"field\": \"year\", \"direction\": \"asc\"}], \"limit\": null}\n```",
+ "input_tokens": 4519,
+ "output_tokens": 184,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "97bac9c205b98962"
+}

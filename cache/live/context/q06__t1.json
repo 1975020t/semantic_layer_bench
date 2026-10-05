@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT playerID, 27.0 * SUM(ER) / SUM(IPOuts) AS era\nFROM Pitching\nWHERE yearID = 2018\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY era ASC\nLIMIT 5\n```",
+ "input_tokens": 6040,
+ "output_tokens": 111,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "862e781ad8dd6837"
+}

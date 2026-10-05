@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT playerID, 3.0 * SUM(BB + H) / SUM(IPOuts) AS whip\nFROM Pitching\nWHERE yearID = 2023\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY whip ASC\nLIMIT 3\n```",
+ "input_tokens": 6044,
+ "output_tokens": 115,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "af5504fb93e63bd0"
+}

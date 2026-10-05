@@ -1,0 +1,18 @@
+{
+ "text": "規定投球回は「チームの試合数 × 1.0」イニング、つまりアウト数では 3 × チーム試合数です。ただし、2023年の MLB は全チーム162試合なので、162イニング = 486アウトを基準にします。移籍した投手がいるため、選手単位で合計してから判定します。WHIP は (与四球 + 被安打) ÷ 投球回 で再計算します。\n\n```sql\nSELECT\n    playerID,\n    (SUM(BB) + SUM(H)) / (SUM(IPOuts) / 3.0) AS WHIP\nFROM Pitching\nWHERE yearID = 2023\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY WHIP ASC\nLIMIT 3;\n```",
+ "input_tokens": 3387,
+ "output_tokens": 270,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "9eea2b3b9e2b28b4"
+}

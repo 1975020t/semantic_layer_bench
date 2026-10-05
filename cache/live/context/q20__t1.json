@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT yearID, lgID, SUM(R) * 1.0 / SUM(G) AS runs_per_game\nFROM Teams\nWHERE yearID BETWEEN 2010 AND 2019 AND lgID IN ('AL', 'NL')\nGROUP BY yearID, lgID\nORDER BY yearID, lgID\n```",
+ "input_tokens": 6050,
+ "output_tokens": 123,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "fb44e6e6894a27a9"
+}

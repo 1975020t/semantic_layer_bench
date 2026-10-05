@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"player_count\"], \"dimensions\": [], \"filters\": [{\"field\": \"year\", \"op\": \"=\", \"value\": 2023}]}\n```",
+ "input_tokens": 4498,
+ "output_tokens": 54,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "debb60d756ebddc5"
+}

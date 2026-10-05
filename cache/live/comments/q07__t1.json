@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT\n    teamID,\n    (H + BB + HBP) * 1.0 / (AB + BB + HBP + SF)\n    + (H + \"2B\" + 2 * \"3B\" + 3 * HR) * 1.0 / AB AS OPS\nFROM Teams\nWHERE yearID = 2015\nORDER BY OPS DESC\nLIMIT 3;\n```",
+ "input_tokens": 3386,
+ "output_tokens": 133,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "6612bb1780a12475"
+}

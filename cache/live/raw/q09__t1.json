@@ -1,0 +1,18 @@
+{
+ "text": "J.D.マルティネスは2017年にチームを移籍しているため、stint が複数ある可能性があります。シーズン合計を返すよう集計しています。\n\n```sql\nSELECT SUM(HR) AS HR, SUM(RBI) AS RBI\nFROM Batting\nWHERE playerID = 'martijd02' AND yearID = 2017;\n```",
+ "input_tokens": 1519,
+ "output_tokens": 124,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "baceebe00d3e03bf"
+}

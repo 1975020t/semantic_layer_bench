@@ -1,0 +1,18 @@
+{
+ "text": "「安定している」の定義が曖昧ですが、ここでは防御率（ERA）が低いことを安定の指標とし、規定投球回に近い一定の投球量（先発として十分な投球回、ここでは162イニング＝486アウト以上）を満たす投手を対象にします。stint をまたぐ移籍投手は playerID で合計し、防御率は ER と IPOuts から再計算します。\n\n```sql\nSELECT\n  playerID\nFROM Pitching\nWHERE yearID = 2022\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY 9.0 * SUM(ER) / (SUM(IPOuts) / 3.0) ASC\nLIMIT 3;\n```",
+ "input_tokens": 3369,
+ "output_tokens": 253,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "18eac9343955f9d0"
+}

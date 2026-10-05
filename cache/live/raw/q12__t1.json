@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT playerID, SUM(HR) AS total_HR\nFROM Batting\nWHERE yearID = 2018\nGROUP BY playerID\nHAVING COUNT(DISTINCT teamID) >= 2\nORDER BY total_HR DESC\nLIMIT 1;\n```",
+ "input_tokens": 1548,
+ "output_tokens": 105,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "41bc45c45e98c7bf"
+}

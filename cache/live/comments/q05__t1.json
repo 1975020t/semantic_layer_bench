@@ -1,0 +1,18 @@
+{
+ "text": "規定打席は通常 3.1×試合数（162試合で502打席）ですが、データに打席数（PA）列がないため、打数+四球+死球+犠飛+犠打から打席数を算出して502以上を条件にします。\n\n```sql\nSELECT\n  playerID,\n  SUM(H) * 1.0 / SUM(AB) AS batting_avg\nFROM Batting\nWHERE yearID = 2021\nGROUP BY playerID\nHAVING SUM(AB + COALESCE(BB,0) + COALESCE(HBP,0) + COALESCE(SF,0) + COALESCE(SH,0)) >= 502\nORDER BY batting_avg DESC\nLIMIT 5;\n```",
+ "input_tokens": 3382,
+ "output_tokens": 242,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "448aad21b2f3bb63"
+}

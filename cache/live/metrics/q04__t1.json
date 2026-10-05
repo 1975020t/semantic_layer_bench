@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"world_series_titles\"], \"dimensions\": [\"year\", \"team_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"between\", \"value\": [2010, 2019]}, {\"field\": \"world_series_titles\", \"op\": \">=\", \"value\": 1}], \"order_by\": [{\"field\": \"year\", \"direction\": \"asc\"}]}\n```",
+ "input_tokens": 4517,
+ "output_tokens": 119,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "a62f2f28dd01e6ea"
+}

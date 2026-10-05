@@ -1,0 +1,18 @@
+{
+ "text": "「安定している」を、防御率(ERA)が低いことと解釈し、2022年に十分な投球回数を投げた投手(規定投球回に近い基準として 162 イニング = IPOuts 486 以上)を対象にしました。複数チームに在籍した選手は合算して集計しています。\n\n```sql\nSELECT playerID\nFROM Pitching\nWHERE yearID = 2022\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY 27.0 * SUM(ER) / SUM(IPOuts) ASC\nLIMIT 3;\n```",
+ "input_tokens": 1511,
+ "output_tokens": 207,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "f6e160a124b58dcf"
+}

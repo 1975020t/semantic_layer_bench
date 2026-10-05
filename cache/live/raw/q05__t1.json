@@ -1,0 +1,18 @@
+{
+ "text": "規定打席は 3.1 × チーム試合数(通常162試合で502打席)ですが、Batting テーブルには打席数(PA)の列がないため、打席数は AB + BB + HBP + SF + SH で近似しています。シーズン中に複数チームに在籍した選手(stint が複数)を考慮して選手ごとに合算し、チーム試合数は Teams テーブルから取得しています(トレードされた選手はチームごとの試合数が異なる場合があるため、リーグ内の最大試合数を使用)。\n\n```sql\nWITH season_games AS (\n    SELECT MAX(G) AS team_games\n    FROM Teams\n    WHERE yearID = 2021\n),\nplayer_totals AS (\n    SELECT\n        playerID,\n        SUM(H) AS H,\n        SUM(AB) AS AB,\n        SUM(AB + COALESCE(BB, 0) + COALESCE(HBP, 0) + COALESCE(SF, 0) + COALESCE(SH, 0)) AS PA\n    FROM Batting\n    WHERE yearID = 2021\n    GROUP BY playerID\n)\nSELECT\n    p.playerID,\n    p.H * 1.0 / p.AB AS batting_average\nFROM player_totals p\nCROSS JOIN season_games s\nWHERE p.PA >= 3.1 * s.team_games\n  AND p.AB > 0\nORDER BY batting_average DESC\nLIMIT 5;\n```",
+ "input_tokens": 1524,
+ "output_tokens": 496,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "e35ca9a01764ce75"
+}

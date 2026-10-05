@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT COUNT(DISTINCT playerID) AS player_count\nFROM Batting\nWHERE yearID = 2023;\n```",
+ "input_tokens": 1502,
+ "output_tokens": 52,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "6fb4ed4a6e1ef0e1"
+}

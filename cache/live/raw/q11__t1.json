@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT SUM(H) * 1.0 / SUM(AB) AS batting_average\nFROM Batting\nWHERE yearID = 2019\n  AND lgID = 'NL';\n```",
+ "input_tokens": 1508,
+ "output_tokens": 70,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "ff825931f16135cd"
+}

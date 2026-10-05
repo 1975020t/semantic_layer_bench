@@ -1,0 +1,18 @@
+{
+ "text": "長打力は ISO（長打率 − 打率）で評価します。2010〜2019年の通算で合計し、率は合計値から再計算します。ISO = (TB − H) / AB で、TB − H = 2B + 2×3B + 3×HR です。規定打席のような最低打数条件は質問にないため、少数打数の選手が上位に来ないよう、通算で一定の打数（ここでは 1500 打数）を条件にします。\n\n```sql\nSELECT\n  playerID\nFROM Batting\nWHERE yearID BETWEEN 2010 AND 2019\nGROUP BY playerID\nHAVING SUM(AB) >= 1500\nORDER BY (SUM(\"2B\") + 2 * SUM(\"3B\") + 3 * SUM(HR)) * 1.0 / SUM(AB) DESC\nLIMIT 5;\n```",
+ "input_tokens": 3383,
+ "output_tokens": 288,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "7148c22476e015b9"
+}

@@ -1,6 +1,6 @@
 {
  "limit": 100,
- "count": 4,
+ "count": 84,
  "calls": [
   {
    "n": 1,
@@ -35,6 +35,726 @@
    "condition": "metrics",
    "qid": "s01",
    "trial": 0,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 5,
+   "at": "2026-10-05T00:07:59+00:00",
+   "condition": "raw",
+   "qid": "q01",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 6,
+   "at": "2026-10-05T00:08:01+00:00",
+   "condition": "comments",
+   "qid": "q01",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 7,
+   "at": "2026-10-05T00:08:03+00:00",
+   "condition": "context",
+   "qid": "q01",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 8,
+   "at": "2026-10-05T00:08:04+00:00",
+   "condition": "metrics",
+   "qid": "q01",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 9,
+   "at": "2026-10-05T00:08:06+00:00",
+   "condition": "raw",
+   "qid": "q02",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 10,
+   "at": "2026-10-05T00:08:07+00:00",
+   "condition": "comments",
+   "qid": "q02",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 11,
+   "at": "2026-10-05T00:08:09+00:00",
+   "condition": "context",
+   "qid": "q02",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 12,
+   "at": "2026-10-05T00:08:10+00:00",
+   "condition": "metrics",
+   "qid": "q02",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 13,
+   "at": "2026-10-05T00:08:12+00:00",
+   "condition": "raw",
+   "qid": "q03",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 14,
+   "at": "2026-10-05T00:08:13+00:00",
+   "condition": "comments",
+   "qid": "q03",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 15,
+   "at": "2026-10-05T00:08:14+00:00",
+   "condition": "context",
+   "qid": "q03",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 16,
+   "at": "2026-10-05T00:08:15+00:00",
+   "condition": "metrics",
+   "qid": "q03",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 17,
+   "at": "2026-10-05T00:08:17+00:00",
+   "condition": "raw",
+   "qid": "q04",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 18,
+   "at": "2026-10-05T00:08:18+00:00",
+   "condition": "comments",
+   "qid": "q04",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 19,
+   "at": "2026-10-05T00:08:20+00:00",
+   "condition": "context",
+   "qid": "q04",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 20,
+   "at": "2026-10-05T00:08:21+00:00",
+   "condition": "metrics",
+   "qid": "q04",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 21,
+   "at": "2026-10-05T00:08:23+00:00",
+   "condition": "raw",
+   "qid": "q05",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 22,
+   "at": "2026-10-05T00:08:27+00:00",
+   "condition": "comments",
+   "qid": "q05",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 23,
+   "at": "2026-10-05T00:08:30+00:00",
+   "condition": "context",
+   "qid": "q05",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 24,
+   "at": "2026-10-05T00:08:31+00:00",
+   "condition": "metrics",
+   "qid": "q05",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 25,
+   "at": "2026-10-05T00:08:33+00:00",
+   "condition": "raw",
+   "qid": "q06",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 26,
+   "at": "2026-10-05T00:08:36+00:00",
+   "condition": "comments",
+   "qid": "q06",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 27,
+   "at": "2026-10-05T00:08:39+00:00",
+   "condition": "context",
+   "qid": "q06",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 28,
+   "at": "2026-10-05T00:08:41+00:00",
+   "condition": "metrics",
+   "qid": "q06",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 29,
+   "at": "2026-10-05T00:08:42+00:00",
+   "condition": "raw",
+   "qid": "q07",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 30,
+   "at": "2026-10-05T00:08:44+00:00",
+   "condition": "comments",
+   "qid": "q07",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 31,
+   "at": "2026-10-05T00:08:46+00:00",
+   "condition": "context",
+   "qid": "q07",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 32,
+   "at": "2026-10-05T00:08:48+00:00",
+   "condition": "metrics",
+   "qid": "q07",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 33,
+   "at": "2026-10-05T00:08:49+00:00",
+   "condition": "raw",
+   "qid": "q08",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 34,
+   "at": "2026-10-05T00:08:52+00:00",
+   "condition": "comments",
+   "qid": "q08",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 35,
+   "at": "2026-10-05T00:08:55+00:00",
+   "condition": "context",
+   "qid": "q08",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 36,
+   "at": "2026-10-05T00:08:56+00:00",
+   "condition": "metrics",
+   "qid": "q08",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 37,
+   "at": "2026-10-05T00:08:58+00:00",
+   "condition": "raw",
+   "qid": "q09",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 38,
+   "at": "2026-10-05T00:09:00+00:00",
+   "condition": "comments",
+   "qid": "q09",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 39,
+   "at": "2026-10-05T00:09:01+00:00",
+   "condition": "context",
+   "qid": "q09",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 40,
+   "at": "2026-10-05T00:09:02+00:00",
+   "condition": "metrics",
+   "qid": "q09",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 41,
+   "at": "2026-10-05T00:09:04+00:00",
+   "condition": "raw",
+   "qid": "q10",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 42,
+   "at": "2026-10-05T00:09:06+00:00",
+   "condition": "comments",
+   "qid": "q10",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 43,
+   "at": "2026-10-05T00:09:07+00:00",
+   "condition": "context",
+   "qid": "q10",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 44,
+   "at": "2026-10-05T00:09:09+00:00",
+   "condition": "metrics",
+   "qid": "q10",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 45,
+   "at": "2026-10-05T00:09:10+00:00",
+   "condition": "raw",
+   "qid": "q11",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 46,
+   "at": "2026-10-05T00:09:12+00:00",
+   "condition": "comments",
+   "qid": "q11",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 47,
+   "at": "2026-10-05T00:09:13+00:00",
+   "condition": "context",
+   "qid": "q11",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 48,
+   "at": "2026-10-05T00:09:14+00:00",
+   "condition": "metrics",
+   "qid": "q11",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 49,
+   "at": "2026-10-05T00:09:16+00:00",
+   "condition": "raw",
+   "qid": "q12",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 50,
+   "at": "2026-10-05T00:09:17+00:00",
+   "condition": "comments",
+   "qid": "q12",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 51,
+   "at": "2026-10-05T00:09:19+00:00",
+   "condition": "context",
+   "qid": "q12",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 52,
+   "at": "2026-10-05T00:09:20+00:00",
+   "condition": "metrics",
+   "qid": "q12",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 53,
+   "at": "2026-10-05T00:09:24+00:00",
+   "condition": "raw",
+   "qid": "q13",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 54,
+   "at": "2026-10-05T00:09:28+00:00",
+   "condition": "comments",
+   "qid": "q13",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 55,
+   "at": "2026-10-05T00:09:31+00:00",
+   "condition": "context",
+   "qid": "q13",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 56,
+   "at": "2026-10-05T00:09:33+00:00",
+   "condition": "metrics",
+   "qid": "q13",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 57,
+   "at": "2026-10-05T00:09:34+00:00",
+   "condition": "raw",
+   "qid": "q14",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 58,
+   "at": "2026-10-05T00:09:37+00:00",
+   "condition": "comments",
+   "qid": "q14",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 59,
+   "at": "2026-10-05T00:09:40+00:00",
+   "condition": "context",
+   "qid": "q14",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 60,
+   "at": "2026-10-05T00:09:41+00:00",
+   "condition": "metrics",
+   "qid": "q14",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 61,
+   "at": "2026-10-05T00:09:43+00:00",
+   "condition": "raw",
+   "qid": "q15",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 62,
+   "at": "2026-10-05T00:09:46+00:00",
+   "condition": "comments",
+   "qid": "q15",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 63,
+   "at": "2026-10-05T00:09:48+00:00",
+   "condition": "context",
+   "qid": "q15",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 64,
+   "at": "2026-10-05T00:09:49+00:00",
+   "condition": "metrics",
+   "qid": "q15",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 65,
+   "at": "2026-10-05T00:09:51+00:00",
+   "condition": "raw",
+   "qid": "q16",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 66,
+   "at": "2026-10-05T00:09:52+00:00",
+   "condition": "comments",
+   "qid": "q16",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 67,
+   "at": "2026-10-05T00:09:56+00:00",
+   "condition": "context",
+   "qid": "q16",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 68,
+   "at": "2026-10-05T00:09:57+00:00",
+   "condition": "metrics",
+   "qid": "q16",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 69,
+   "at": "2026-10-05T00:10:00+00:00",
+   "condition": "raw",
+   "qid": "q17",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 70,
+   "at": "2026-10-05T00:10:02+00:00",
+   "condition": "comments",
+   "qid": "q17",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 71,
+   "at": "2026-10-05T00:10:03+00:00",
+   "condition": "context",
+   "qid": "q17",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 72,
+   "at": "2026-10-05T00:10:05+00:00",
+   "condition": "metrics",
+   "qid": "q17",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 73,
+   "at": "2026-10-05T00:10:07+00:00",
+   "condition": "raw",
+   "qid": "q18",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 74,
+   "at": "2026-10-05T00:10:08+00:00",
+   "condition": "comments",
+   "qid": "q18",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 75,
+   "at": "2026-10-05T00:10:10+00:00",
+   "condition": "context",
+   "qid": "q18",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 76,
+   "at": "2026-10-05T00:10:12+00:00",
+   "condition": "metrics",
+   "qid": "q18",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 77,
+   "at": "2026-10-05T00:10:13+00:00",
+   "condition": "raw",
+   "qid": "q19",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 78,
+   "at": "2026-10-05T00:10:16+00:00",
+   "condition": "comments",
+   "qid": "q19",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 79,
+   "at": "2026-10-05T00:10:19+00:00",
+   "condition": "context",
+   "qid": "q19",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 80,
+   "at": "2026-10-05T00:10:21+00:00",
+   "condition": "metrics",
+   "qid": "q19",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 81,
+   "at": "2026-10-05T00:10:23+00:00",
+   "condition": "raw",
+   "qid": "q20",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 82,
+   "at": "2026-10-05T00:10:25+00:00",
+   "condition": "comments",
+   "qid": "q20",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 83,
+   "at": "2026-10-05T00:10:27+00:00",
+   "condition": "context",
+   "qid": "q20",
+   "trial": 1,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 84,
+   "at": "2026-10-05T00:10:28+00:00",
+   "condition": "metrics",
+   "qid": "q20",
+   "trial": 1,
    "model": "claude-sonnet-5-5",
    "status": "ok"
   }

@@ -1,0 +1,18 @@
+{
+ "text": "2015年の前年増減を出すため、2014年のデータも含めて集計してから LAG で差分を取り、最後に2015〜2024年に絞ります。\n\n```sql\nWITH yearly AS (\n  SELECT yearID, SUM(HR) AS total_hr\n  FROM Batting\n  WHERE yearID BETWEEN 2014 AND 2024\n  GROUP BY yearID\n),\ndiffed AS (\n  SELECT yearID,\n         total_hr,\n         total_hr - LAG(total_hr) OVER (ORDER BY yearID) AS change_from_prev_year\n  FROM yearly\n)\nSELECT yearID, total_hr, change_from_prev_year\nFROM diffed\nWHERE yearID BETWEEN 2015 AND 2024\nORDER BY yearID;\n```",
+ "input_tokens": 1523,
+ "output_tokens": 276,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "752199aa97dde7fe"
+}

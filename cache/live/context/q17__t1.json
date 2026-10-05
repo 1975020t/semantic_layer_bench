@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT (yearID // 10) * 10 AS decade,\n       SUM(H) * 1.0 / SUM(AB) AS avg,\n       SUM(HR) AS total_hr\nFROM Batting\nWHERE yearID BETWEEN 1970 AND 2019\nGROUP BY decade\nORDER BY decade\n```",
+ "input_tokens": 6055,
+ "output_tokens": 119,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "0474d6ebf497bd9d"
+}

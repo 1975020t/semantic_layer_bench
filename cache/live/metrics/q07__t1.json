@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"ops\"], \"dimensions\": [\"team_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"=\", \"value\": 2015}], \"order_by\": [{\"field\": \"ops\", \"direction\": \"desc\"}], \"limit\": 3}\n```",
+ "input_tokens": 4524,
+ "output_tokens": 88,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "496e48b80e5c9c9a"
+}

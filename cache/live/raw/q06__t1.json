@@ -1,0 +1,18 @@
+{
+ "text": "規定投球回は「チームの試合数 × 1イニング」なので、投球回(IPOuts/3)がそのチーム試合数以上であることを条件にしています。stint が複数ある選手(シーズン中の移籍)も考慮し、選手ごとに集計したうえでチーム試合数は Teams の最大値(G)で近似しています。防御率は ER×9/(IPOuts/3) で再計算しています。\n\n```sql\nWITH tg AS (\n  SELECT yearID, MAX(G) AS team_games\n  FROM Teams\n  WHERE yearID = 2018\n  GROUP BY yearID\n),\np AS (\n  SELECT\n    playerID,\n    SUM(IPOuts) AS ipouts,\n    SUM(ER) AS er\n  FROM Pitching\n  WHERE yearID = 2018\n  GROUP BY playerID\n)\nSELECT\n  p.playerID,\n  p.er * 27.0 / p.ipouts AS era\nFROM p\nCROSS JOIN tg\nWHERE p.ipouts / 3.0 >= tg.team_games\nORDER BY era ASC\nLIMIT 5;\n```",
+ "input_tokens": 1525,
+ "output_tokens": 392,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "f5ae7325843c178e"
+}

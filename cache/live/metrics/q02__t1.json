@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"wins\"], \"dimensions\": [\"team_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"=\", \"value\": 2022}, {\"field\": \"league\", \"op\": \"=\", \"value\": \"AL\"}, {\"field\": \"wins\", \"op\": \">=\", \"value\": 90}]}\n```",
+ "input_tokens": 4513,
+ "output_tokens": 102,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "f58e83463ba462ae"
+}

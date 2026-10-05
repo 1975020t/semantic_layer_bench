@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT playerID, SUM(HR) AS hr\nFROM Batting\nWHERE yearID = 2019\nGROUP BY playerID\nORDER BY hr DESC\nLIMIT 5\n```",
+ "input_tokens": 6038,
+ "output_tokens": 76,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "4dd89157bd7df3d9"
+}

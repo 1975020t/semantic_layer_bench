@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"era\"], \"dimensions\": [\"player_id\"], \"filters\": [{\"field\": \"year\", \"op\": \"=\", \"value\": 2018}, {\"field\": \"innings_pitched\", \"op\": \">=\", \"value\": 162}], \"order_by\": [{\"field\": \"era\", \"direction\": \"asc\"}], \"limit\": 5}\n```",
+ "input_tokens": 4521,
+ "output_tokens": 112,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "5d69ac8906df4016"
+}

@@ -1,0 +1,18 @@
+{
+ "text": "「最も成功」の指標として、1990年代（1990〜1999年）の合計勝利数をフランチャイズ単位で集計し、最多の球団を返します。\n\n```sql\nSELECT franchID\nFROM Teams\nWHERE yearID BETWEEN 1990 AND 1999\nGROUP BY franchID\nORDER BY SUM(W) DESC\nLIMIT 1;\n```",
+ "input_tokens": 3369,
+ "output_tokens": 136,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "fdcb5f28c5c5e07b"
+}

@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT playerID\nFROM Batting\nWHERE yearID BETWEEN 2010 AND 2019\nGROUP BY playerID\nHAVING SUM(AB) > 0\nORDER BY (SUM(H) + SUM(\"2B\") + 2 * SUM(\"3B\") + 3 * SUM(HR)) * 1.0 / SUM(AB) DESC\nLIMIT 5;\n```",
+ "input_tokens": 1525,
+ "output_tokens": 143,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "4c5e5120c9457fd9"
+}

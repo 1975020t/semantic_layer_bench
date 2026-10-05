@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"k_per_9\"], \"dimensions\": [\"year\"], \"filters\": [{\"field\": \"year\", \"op\": \"between\", \"value\": [2000, 2019]}], \"order_by\": [{\"field\": \"year\", \"direction\": \"asc\"}], \"limit\": null}\n```",
+ "input_tokens": 4514,
+ "output_tokens": 92,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "dbb56f15b3a62746"
+}

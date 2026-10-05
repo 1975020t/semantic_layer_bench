@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT yearID, teamID\nFROM Teams\nWHERE yearID BETWEEN 2010 AND 2019 AND WSWin = 'Y'\nORDER BY yearID\n```",
+ "input_tokens": 6036,
+ "output_tokens": 72,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "c8f1ea777726ca3e"
+}

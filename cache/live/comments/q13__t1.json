@@ -1,0 +1,18 @@
+{
+ "text": "「最強打者」は定義が曖昧なので、OPS（出塁率＋長打率）で評価します。シーズン途中の移籍に対応するため playerID, yearID で合計してから率を再計算し、極端に少ない打席数の選手を除くため規定打席相当（PA ≥ 502）を条件にしています。\n\n```sql\nSELECT\n  playerID\nFROM (\n  SELECT\n    playerID,\n    SUM(H) AS H,\n    SUM(\"2B\") AS d2,\n    SUM(\"3B\") AS d3,\n    SUM(HR) AS HR,\n    SUM(AB) AS AB,\n    SUM(BB) AS BB,\n    SUM(HBP) AS HBP,\n    SUM(SF) AS SF\n  FROM Batting\n  WHERE yearID = 2019\n  GROUP BY playerID\n) b\nWHERE AB + BB + COALESCE(HBP, 0) + COALESCE(SF, 0) >= 502\nORDER BY\n  (H + BB + COALESCE(HBP, 0)) * 1.0\n    / (AB + BB + COALESCE(HBP, 0) + COALESCE(SF, 0))\n  + (H + d2 + 2 * d3 + 3 * HR) * 1.0 / AB DESC\nLIMIT 1;\n```",
+ "input_tokens": 3362,
+ "output_tokens": 447,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "e249c001c40f8139"
+}

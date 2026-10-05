@@ -1,0 +1,18 @@
+{
+ "text": "「最強打者」の定義が曖昧ですが、ここでは打撃の総合力を表す OPS(出塁率+長打率)が最も高い選手と解釈します。規定打席(試合数162×3.1 ≒ 502打席)に近い基準として、打席数(AB+BB+HBP+SF+SH)502以上の選手に限定し、同一年に複数チームに所属した選手は合算して集計します。\n\n```sql\nSELECT playerID\nFROM Batting\nWHERE yearID = 2019\nGROUP BY playerID\nHAVING SUM(AB + COALESCE(BB,0) + COALESCE(HBP,0) + COALESCE(SF,0) + COALESCE(SH,0)) >= 502\nORDER BY\n    (SUM(H + COALESCE(BB,0) + COALESCE(HBP,0)) * 1.0\n        / NULLIF(SUM(AB + COALESCE(BB,0) + COALESCE(HBP,0) + COALESCE(SF,0)), 0))\n    +\n    (SUM((H - \"2B\" - \"3B\" - HR) + 2 * \"2B\" + 3 * \"3B\" + 4 * HR) * 1.0\n        / NULLIF(SUM(AB), 0))\n    DESC\nLIMIT 1;\n```",
+ "input_tokens": 1504,
+ "output_tokens": 442,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "517386011253f9ef"
+}
