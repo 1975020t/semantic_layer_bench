@@ -1,5 +1,42 @@
 {
  "limit": 100,
- "count": 0,
- "calls": []
+ "count": 4,
+ "calls": [
+  {
+   "n": 1,
+   "at": "2026-10-05T00:07:43+00:00",
+   "condition": "raw",
+   "qid": "s01",
+   "trial": 0,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 2,
+   "at": "2026-10-05T00:07:46+00:00",
+   "condition": "comments",
+   "qid": "s01",
+   "trial": 0,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 3,
+   "at": "2026-10-05T00:07:47+00:00",
+   "condition": "context",
+   "qid": "s01",
+   "trial": 0,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  },
+  {
+   "n": 4,
+   "at": "2026-10-05T00:07:49+00:00",
+   "condition": "metrics",
+   "qid": "s01",
+   "trial": 0,
+   "model": "claude-sonnet-5-5",
+   "status": "ok"
+  }
+ ]
 }

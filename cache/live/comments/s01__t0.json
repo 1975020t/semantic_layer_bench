@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT SUM(HR) AS total_hr\nFROM Batting\nWHERE yearID = 2019;\n```",
+ "input_tokens": 3361,
+ "output_tokens": 45,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "d53348afc8fe9aea"
+}
