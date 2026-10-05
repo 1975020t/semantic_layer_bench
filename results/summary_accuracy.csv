@@ -1,0 +1,7 @@
+category,raw,comments,context,metrics
+simple,4/4,4/4,4/4,4/4
+derived,4/4,4/4,4/4,4/4
+join_grain,4/4,4/4,4/4,4/4
+ambiguous,2/4,2/4,4/4,3/4
+timeseries,3/4,1/4,3/4,3/4
+_all,17/20,15/20,19/20,18/20

@@ -1,0 +1,6 @@
+error_type,raw,comments,context,metrics
+correct,17,15,19,18
+sql_error,0,0,0,0
+mismatch,3,5,1,1
+unanswerable,0,0,0,1
+api_error,0,0,0,0

@@ -1,0 +1,17 @@
+qid,condition,trial1_correct,trial2_correct,same_result,same_sql
+q05,raw,True,True,True,False
+q05,comments,True,True,True,False
+q05,context,True,True,True,True
+q05,metrics,True,True,True,True
+q10,raw,True,True,True,True
+q10,comments,True,True,True,True
+q10,context,True,True,True,True
+q10,metrics,True,True,True,True
+q14,raw,False,False,False,False
+q14,comments,False,False,True,False
+q14,context,True,True,True,True
+q14,metrics,True,True,True,True
+q18,raw,True,True,True,False
+q18,comments,True,True,True,True
+q18,context,True,True,True,True
+q18,metrics,True,True,True,True
