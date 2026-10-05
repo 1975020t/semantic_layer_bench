@@ -1,0 +1,18 @@
+{
+ "text": "「最も安定していた」の定義が曖昧ですが、ここでは防御率（ERA）が最も低い投手を安定性の指標とし、投球回の足切りとして規定投球回（162イニング＝486アウト）以上を条件にしました。\n\n```sql\nSELECT playerID\nFROM Pitching\nWHERE yearID = 2022\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 486\nORDER BY SUM(ER) * 27.0 / SUM(IPOuts) ASC\nLIMIT 3;\n```",
+ "input_tokens": 3369,
+ "output_tokens": 192,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "18eac9343955f9d0"
+}

@@ -1,0 +1,18 @@
+{
+ "text": "```json\n{\"measures\": [\"wins\"], \"dimensions\": [], \"filters\": [{\"field\": \"franchise_id\", \"op\": \"=\", \"value\": \"ANA\"}, {\"field\": \"year\", \"op\": \"between\", \"value\": [1990, 2020]}], \"order_by\": [], \"limit\": null}\n```",
+ "input_tokens": 4523,
+ "output_tokens": 97,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "254b20ba2db2c99e"
+}

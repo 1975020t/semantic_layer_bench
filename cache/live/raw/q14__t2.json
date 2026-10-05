@@ -1,0 +1,18 @@
+{
+ "text": "「安定している」の定義が曖昧ですが、ここでは「防御率(ERA)が低い投手」を安定性の指標とし、2022年に一定以上の投球回(規定投球回に近い100イニング以上=IPOuts≥300)を投げた投手に絞ります。複数チーム在籍(stint)は選手単位で合算し、ERAは自責点と投球回から再計算します。\n\n```sql\nSELECT playerID\nFROM Pitching\nWHERE yearID = 2022\nGROUP BY playerID\nHAVING SUM(IPOuts) >= 300\nORDER BY SUM(ER) * 27.0 / SUM(IPOuts) ASC\nLIMIT 3;\n```",
+ "input_tokens": 1511,
+ "output_tokens": 242,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "f6e160a124b58dcf"
+}

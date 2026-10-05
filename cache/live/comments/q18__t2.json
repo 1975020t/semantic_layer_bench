@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT\n  yearID,\n  SUM(SO) * 9.0 / (SUM(IPOuts) / 3.0) AS k_per_9\nFROM Pitching\nWHERE yearID BETWEEN 2000 AND 2019\nGROUP BY yearID\nORDER BY yearID;\n```",
+ "input_tokens": 3376,
+ "output_tokens": 110,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "c2bf6e9016c22b49"
+}

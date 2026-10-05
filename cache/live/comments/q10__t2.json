@@ -1,0 +1,18 @@
+{
+ "text": "```sql\nSELECT SUM(t.W) AS total_wins\nFROM Teams t\nJOIN TeamsFranchises f ON t.franchID = f.franchID\nWHERE f.franchName LIKE '%Angels%'\n  AND t.yearID BETWEEN 1990 AND 2020;\n```",
+ "input_tokens": 3385,
+ "output_tokens": 107,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "cde4b722636fd95b"
+}

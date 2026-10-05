@@ -1,0 +1,18 @@
+{
+ "text": "規定打席(3.1打席×チーム試合数)の判定には、打数ではなく打席数(PA)が必要です。Batting には PA 列がないため、PA = AB + BB + HBP + SH + SF(+ 打撃妨害は含まれない)で近似し、チームの試合数は Teams テーブルの G を使います。シーズン中に複数球団でプレーした選手(stint が複数)は、年間合算で判定します。\n\n```sql\nWITH player_season AS (\n    SELECT\n        playerID,\n        SUM(AB) AS AB,\n        SUM(H) AS H,\n        SUM(AB + COALESCE(BB, 0) + COALESCE(HBP, 0) + COALESCE(SH, 0) + COALESCE(SF, 0)) AS PA\n    FROM Batting\n    WHERE yearID = 2021\n    GROUP BY playerID\n),\nteam_games AS (\n    SELECT MAX(G) AS G\n    FROM Teams\n    WHERE yearID = 2021\n)\nSELECT\n    ps.playerID,\n    CAST(ps.H AS DOUBLE) / ps.AB AS batting_average\nFROM player_season ps\nCROSS JOIN team_games tg\nWHERE ps.PA >= 3.1 * tg.G\n  AND ps.AB > 0\nORDER BY batting_average DESC\nLIMIT 5;\n```",
+ "input_tokens": 1524,
+ "output_tokens": 473,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "e35ca9a01764ce75"
+}

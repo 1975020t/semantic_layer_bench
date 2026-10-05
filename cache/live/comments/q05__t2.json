@@ -1,0 +1,18 @@
+{
+ "text": "規定打席は一般に 3.1 × 試合数（162試合で502打席）ですが、Batting には打席数（PA）列がないため、打席 = AB + BB + HBP + SF + SH で計算し、502打席以上を規定打席到達としています。移籍選手がいるため、playerID・yearID ごとに合計してから率を再計算します。\n\n```sql\nSELECT\n  playerID,\n  SUM(H) * 1.0 / SUM(AB) AS batting_avg\nFROM Batting\nWHERE yearID = 2021\nGROUP BY playerID, yearID\nHAVING SUM(AB + COALESCE(BB,0) + COALESCE(HBP,0) + COALESCE(SF,0) + COALESCE(SH,0)) >= 502\nORDER BY batting_avg DESC\nLIMIT 5;\n```",
+ "input_tokens": 3382,
+ "output_tokens": 288,
+ "model": "claude-sonnet-5-5",
+ "cached": false,
+ "api_called": false,
+ "mock": false,
+ "stop_reason": "end_turn",
+ "request_params": {
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 4096,
+  "thinking": {
+   "type": "between_tools"
+  }
+ },
+ "prompt_hash": "448aad21b2f3bb63"
+}
